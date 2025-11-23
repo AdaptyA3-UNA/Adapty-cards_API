@@ -14,6 +14,17 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<Adapty.API.Services.SpacedRepetitionService>();
 builder.Services.AddScoped<Adapty.API.Services.AuthService>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
+});
+
 // --- MUDANÇA 1: Configurar Autenticação JWT ---
 var jwtKey = builder.Configuration["Jwt:Key"];
 if (string.IsNullOrEmpty(jwtKey))
@@ -80,6 +91,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowAll");
 
 // --- MUDANÇA 3: Ordem correta dos Middlewares ---
 app.UseAuthentication(); // <-- OBRIGATÓRIO vir antes do Authorization
