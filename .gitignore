@@ -37,7 +37,7 @@
 
 # Ignora configurações locais com senhas/chaves (se aplicável)
 # Se você tem a senha do seu MySQL no appsettings.Development.json, ignore-o.
-appsettings.Development.json
+
 appsettings.Local.json
 
 ################################################################################
